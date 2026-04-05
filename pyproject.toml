@@ -1,0 +1,19 @@
+[project]
+name = "lh"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.2.15",
+    "langchain-community>=0.4.1",
+    "langchain-core>=1.2.26",
+    "langchain-ollama>=1.0.1",
+    "langchain-openai>=1.1.12",
+]
+
+[dependency-groups]
+dev = [
+    "rich>=14.3.3",
+    "ruff>=0.15.9",
+]
