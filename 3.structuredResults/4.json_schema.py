@@ -1,20 +1,47 @@
 from langchain_ollama import ChatOllama
-from typing import TypedDict ,Annotated,Optional
-
+from typing import TypedDict, Annotated, Optional, Literal
+from pydantic import BaseModel, Field
 from rich.console import Console
 
 csl = Console()
-model = ChatOllama(model="gemma4",temperature=0.0)
+model = ChatOllama(model="gemma4", temperature=0.0)
 
-class Schema(TypedDict):
-    key_themes:Annotated[list[str],"must write down all the key themes discussed in the review in a list"]
-    summary:Annotated[str,"must write down a brief summary of the review"]
-    sentiment:Annotated[str,"must return sentiment of the review, either Positive or Negative"]
-    pros:Annotated[Optional[list[str]],"write down all the pros inside a list"]
-    cons:Annotated[Optional[list[str]],"write down all the cons inside a list"]
+# Schema
 
+json_schema = {
+    "title": "Review",
+    "type": "object",
+    "properties": {
+        "key_themes": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Write down all the key themes discussed in the review in a list",
+        },
+        "summary": {"type": "string", "description": "A brief summary of the review"},
+        "sentiment": {
+            "type": "string",
+            "enum": ["pos", "neg"],
+            "description": "Return sentiment of the review either negative, positive",
+        },
+        "pros": {
+            "type": ["array", "null"],
+            "items": {"type": "string"},
+            "description": "Write down all the pros inside a list",
+        },
+        "cons": {
+            "type": ["array", "null"],
+            "items": {"type": "string"},
+            "description": "Write down all the cons inside a list",
+        },
+        "name": {
+            "type": ["string", "null"],
+            "description": "Write the name of the reviewer",
+        },
+    },
+    "required": ["key_themes", "summary", "sentiment"],
+}
 
-stucture_model=model.with_structured_output(Schema)
+structured_model=model.with_structured_output(json_schema)
 
 prompt="""
 Google's Pixel phones have never been the most powerful handsets, with their Tensor chipsets
@@ -48,5 +75,5 @@ able to improve the Pixel 10 Pro's GPU performance through a software update.
 
 """
 
-response =stucture_model.invoke(prompt)
+response =structured_model.invoke(prompt)
 csl.print_json(data=response)

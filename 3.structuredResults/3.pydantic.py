@@ -1,20 +1,20 @@
 from langchain_ollama import ChatOllama
-from typing import TypedDict ,Annotated,Optional
-
+from typing import Optional, Literal
+from pydantic import BaseModel, Field
 from rich.console import Console
 
 csl = Console()
 model = ChatOllama(model="gemma4",temperature=0.0)
 
-class Schema(TypedDict):
-    key_themes:Annotated[list[str],"must write down all the key themes discussed in the review in a list"]
-    summary:Annotated[str,"must write down a brief summary of the review"]
-    sentiment:Annotated[str,"must return sentiment of the review, either Positive or Negative"]
-    pros:Annotated[Optional[list[str]],"write down all the pros inside a list"]
-    cons:Annotated[Optional[list[str]],"write down all the cons inside a list"]
+class Review(BaseModel):
+    key_themes:list[str]=Field(description="must write down all the key themes discussed in the review in a list")
+    summary:str=Field(description="must write down a brief summary of the review")
+    sentiment:Literal['pos','neg']=Field(description="Return sentiment of the review")
+    pros:Optional[list[str]]=Field(default=None,description="write down all the pros inside a list")
+    cons:Optional[list[str]]=Field(default=None,description="write down all the cons inside a list")
+    name: Optional[str]=Field(description="Write down the name of the reviewer")
 
-
-stucture_model=model.with_structured_output(Schema)
+stucture_model=model.with_structured_output(Review)
 
 prompt="""
 Google's Pixel phones have never been the most powerful handsets, with their Tensor chipsets
@@ -49,4 +49,6 @@ able to improve the Pixel 10 Pro's GPU performance through a software update.
 """
 
 response =stucture_model.invoke(prompt)
-csl.print_json(data=response)
+csl.print_json(data=response.model_dump())
+
+
