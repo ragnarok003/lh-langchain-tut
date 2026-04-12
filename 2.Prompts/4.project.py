@@ -3,7 +3,7 @@ from langchain_ollama import ChatOllama
 from rich.console import Console
 from rich.markdown import Markdown
 console=Console()
-chat_model=ChatOllama(model="gpt-oss")
+chat_model=ChatOllama(model="gemma4")
 print("Blog Post Generator")
 print("Provide ideas or topics for the blog post. Type exit to finish.")
 
