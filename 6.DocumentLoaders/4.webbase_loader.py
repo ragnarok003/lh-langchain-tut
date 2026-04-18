@@ -24,6 +24,6 @@ parser =StrOutputParser()
 
 chain =prompt | model | parser
 
-result =chain.invoke({'question':"What is the product the article talking about ?","text":docs[0].page_content})
+result =chain.invoke({'question':"Summarize the page","text":docs[0].page_content})
 
 csl.print(Markdown(result))
