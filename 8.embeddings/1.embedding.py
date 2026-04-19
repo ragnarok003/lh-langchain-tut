@@ -13,8 +13,11 @@ csl =Console()
 
 embeddings1 =OllamaEmbeddings(model="mxbai-embed-large")
 embeddings2 =OllamaEmbeddings(model="embeddinggemma:latest")
-text = "New York is a busy city with a lot of population"
-
+texts = [
+    "New York is a busy city",
+    "NYC has a large population",
+    "Bananas are yellow"
+]
 result1 = embeddings1.embed_query(text)
 result2 = embeddings2.embed_query(text)
 
