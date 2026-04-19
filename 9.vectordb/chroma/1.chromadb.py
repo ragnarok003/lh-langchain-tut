@@ -16,7 +16,8 @@ embeddings1 =OllamaEmbeddings(model="mxbai-embed-large")
 vector_store = Chroma.from_texts(
     texts=texts,
     embedding=embeddings1,
-    collection_name="Langchain_chroma_demo"
+    collection_name="Langchain_chroma_demo",
+    persist_directory="9.vectordb/chroma/chroma_langchain_db"
 )
 
 query ="tell me more about llms"
