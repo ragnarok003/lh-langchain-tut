@@ -20,7 +20,11 @@ vector_store = QdrantVectorStore.from_texts(
 )
 
 
-retriever = vector_store.as_retriever(search_kwargs={"k":2})
+# retriever = vector_store.as_retriever(search_kwargs={"k":2})
 
-docs = retriever.invoke("vehicle that does not need fuel")
-csl.print(docs)
+# docs = retriever.invoke("vehicle that does not need fuel")
+# csl.print(docs)
+
+results=vector_store.similarity_search(query="vehicle that does not need fuel", k=2)
+csl.print(results)
+
