@@ -1,7 +1,6 @@
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from rich.console import Console
-from sympy import Q
 
 csl =Console()
 
