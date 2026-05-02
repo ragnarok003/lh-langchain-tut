@@ -10,7 +10,8 @@ db =SQLDatabase.from_uri("sqlite:///11.sql/chinook.db")
 
 llm =ChatOllama(
     model="gemma4:e2b",
-    temperature=0.0
+    temperature=0.0,
+    # format="json"
 )
 
 agent_executor = create_sql_agent(llm=llm,db=db,agent_type="tool-calling",verbose=True)
