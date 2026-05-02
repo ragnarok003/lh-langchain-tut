@@ -14,8 +14,10 @@ dependencies = [
     "langchain-core>=1.2.26",
     "langchain-ollama>=1.0.1",
     "langchain-openai>=1.1.12",
+    "langchain-postgres>=0.0.17",
     "langchain-qdrant>=1.1.0",
     "pypdf>=6.10.2",
+    "sqlalchemy>=2.0.49",
     "wikipedia>=1.4.0",
 ]
 
